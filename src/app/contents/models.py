@@ -8,16 +8,16 @@ class Content(db.Model):
     __tablename__ = "contents"
     session = db.session
     data = db.Column(db.Text())
-    _type = db.Column(db.String(80), primary_key=True)
+    type_ = db.Column(db.String(80), primary_key=True)
 
-    def __init__(self, data, type):
+    def __init__(self, data, type_):
         self.data = data
-        self._type = type
+        self.type_ = type_
 
     def to_dict(self):
         return{
             "data": self.data,
-            "_type": self._type,
+            "type_": self.type_,
         }
 
     @classmethod
@@ -29,17 +29,17 @@ class Content(db.Model):
         return cls.session.query(cls).all()
 
     @classmethod
-    def get_content_by_type(cls, _type):
-        return cls.session.query(cls).get(_type)
+    def get_content_by_type(cls, type_):
+        return cls.session.query(cls).get(type_)
 
     @classmethod
     def save_content(cls, content):
         cls.session.add(content)
         cls.make_commit()
 
-        return content._type
+        return content.type_
 
     @classmethod
-    def delete_content(cls, _type):
-        cls.session.query(cls).filter(cls._type == _type).delete()
+    def delete_content(cls, type_):
+        cls.session.query(cls).filter(cls.type_ == type_).delete()
         cls.make_commit()

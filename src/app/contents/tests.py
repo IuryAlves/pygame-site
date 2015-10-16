@@ -42,19 +42,19 @@ class ContentApiTests(unittest.TestCase):
         self.assertEqual(len(contents), 1)
         self.assertEqual(contents[0],
                          {"data": "<p>teste</p>",
-                          "_type": "downloads"
+                          "type_": "downloads"
                           })
 
     def test_add_content(self):
 
         data = json.dumps(
-            {"data": "<p> oba oba boa ee </p>", "_type": "downloads"})
+            {"data": "<p> oba oba boa ee </p>", "type_": "downloads"})
         response = self.client.post("/api/contents/add", data=data)
         self.assertEqual(response.status_code, 200)
 
     def test_remove_content(self):
         content_usecase.add_content("<p> oba oba boa ee </p>", "downloads")
-        data = json.dumps({"_type": "downloads"})
+        data = json.dumps({"type_": "downloads"})
         response = self.client.post("/api/contents/delete", data=data)
 
         self.assertEqual(response.status_code, 200)
@@ -62,7 +62,7 @@ class ContentApiTests(unittest.TestCase):
     def test_edit_content(self):
         content_usecase.add_content("<p> oba oba boa ee </p>", "downloads")
 
-        data = json.dumps({"data": "<p>  ahoi </p>", "_type": "downloads"})
+        data = json.dumps({"data": "<p>  ahoi </p>", "type_": "downloads"})
         response = self.client.post("/api/contents/edit", data=data)
 
         json_data = json.loads(response.data)
