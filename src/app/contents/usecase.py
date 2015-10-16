@@ -5,27 +5,27 @@ from models import Content
 
 def delete_all_contents():
     for content in get_contents():
-        delete_content(content._type)
+        delete_content(content.type_)
 
 
 def get_contents():
     return Content.get_contents()
 
 
-def delete_content(_type):
-    return Content.delete_content(_type)
+def delete_content(type_):
+    return Content.delete_content(type_)
 
 
-def add_content(data, _type):
-    content = Content(data, _type)
+def add_content(data, type_):
+    content = Content(data, type_)
 
     return Content.save_content(content)
 
 
-def edit_content(_type, **kwargs):
+def edit_content(type_, **kwargs):
     data = kwargs.get("data")
 
-    content = Content.get_content_by_type(_type)
+    content = Content.get_content_by_type(type_)
 
     if content is None:
         return None

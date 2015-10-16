@@ -25,17 +25,17 @@ def get():
 
 @contents_api.route("/delete", methods=["POST"])
 def delete():
-    _type = json.loads(request.data)["_type"]
+    type_ = json.loads(request.data)["type_"]
 
-    usecase.delete_content(_type)
+    usecase.delete_content(type_)
     return jsonify(data={})
 
 
 @contents_api.route("/edit", methods=["POST"])
 def edit():
     data = json.loads(request.data)
-    _type = data.pop("_type")
-    edited_content = usecase.edit_content(_type, **data)
+    type_ = data.pop("type_")
+    edited_content = usecase.edit_content(type_, **data)
 
     if edited_content is None:
         response = make_response("content object does not exists")
